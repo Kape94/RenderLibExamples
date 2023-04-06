@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.22)
+project(RenderLibExamples)
+
+add_subdirectory(RenderLib)
+add_subdirectory(ex1-minimal)
+
