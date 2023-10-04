@@ -8,7 +8,8 @@ class Window {
 
     Window(
       const unsigned width,
-      const unsigned height
+      const unsigned height,
+      const char* windowName
     );
 
     ~Window();

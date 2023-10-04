@@ -6,7 +6,8 @@
 
 Window::Window(
   const unsigned width,
-  const unsigned height
+  const unsigned height,
+  const char* windowName
 )
 {
   glfwInit();
@@ -14,7 +15,7 @@ Window::Window(
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   
-  this->window = glfwCreateWindow(width, height, "Example 1", nullptr, nullptr);
+  this->window = glfwCreateWindow(width, height, windowName, nullptr, nullptr);
 
   glfwMakeContextCurrent(window);
 }
