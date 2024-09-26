@@ -5,10 +5,8 @@
 
 #include "Utils/Window.h"
 
-#include <GL/glew.h>
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/geometric.hpp>
-
 
 namespace Inputs {
 
@@ -70,7 +68,7 @@ int main() {
   float angle = 0.0f;
 
   while (!win.ShouldClose()) {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    RenderLib::Clear();
     
     shader.Use();
 
