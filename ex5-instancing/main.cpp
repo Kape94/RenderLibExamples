@@ -9,7 +9,6 @@
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/geometric.hpp>
 
-
 namespace Inputs {
 
   constexpr unsigned SCR_WIDTH = 800;
@@ -20,12 +19,11 @@ namespace Inputs {
     const char* vShader = R"(
       #version 330
 
-      uniform mat4 transform;
-
       layout (location = 0) in vec3 pos;
+      layout (location = 1) in vec2 offset;
 
       void main() {
-        gl_Position = transform * vec4(pos, 1.0);
+        gl_Position = vec4(pos, 1.0) + vec4(offset, 0.0, 0.0);
       }
     )";
 
@@ -45,45 +43,55 @@ namespace Inputs {
     const std::vector<float> vertex{
       //x ,    y,    z
       0.0f, 0.0f, 0.0f,
-      1.0f, 0.0f, 0.0f,
-      0.0f, 1.0f, 0.0f
+      0.1f, 0.0f, 0.0f,
+      0.0f, 0.1f, 0.0f
     };
 
     const std::vector<unsigned> index{ 0, 1, 2 };
+  }
+
+  namespace InstanceData {
+    
+    const unsigned dataSize = sizeof(glm::vec2);
+
+    const std::vector<glm::vec2> positions{
+      {0.2, 0.2},
+      {-0.2, 0.2},
+      {-0.2, -0.2},
+      {0.2, -0.2},
+      {0.3, 0.3},
+    };
 
   }
 
 }
 
 int main() {
-  Window win(Inputs::SCR_WIDTH, Inputs::SCR_HEIGHT, "Example #3");
+  Window win(Inputs::SCR_WIDTH, Inputs::SCR_HEIGHT, "Example #5");
 
   RenderLib::Initialize();
   RenderLib::SetViewport(0, 0, Inputs::SCR_WIDTH, Inputs::SCR_HEIGHT);
 
   RenderLib::Shader shader(Inputs::ShaderCodes::vShader, Inputs::ShaderCodes::fShader);
 
-  RenderLib::Buffer buffer(Inputs::BufferData::vertex, Inputs::BufferData::index,
-    { RenderLib::ShaderAttribute::Float(0/*position*/, 3/*nFloats*/) }
+  RenderLib::Buffer buffer;
+  buffer.CreateInstanced(
+    Inputs::BufferData::vertex.data(),
+    (unsigned)Inputs::BufferData::vertex.size(),
+    Inputs::BufferData::index.data(),
+    (unsigned)Inputs::BufferData::index.size(),
+    { RenderLib::ShaderAttribute::Float(0/*location*/, 3/*nEntries*/)},
+    Inputs::InstanceData::positions.data(),
+    Inputs::InstanceData::dataSize,
+    Inputs::InstanceData::positions.size(),
+    { RenderLib::ShaderAttribute::Float(1/*location*/, 2/*nEntries*/)}
   );
-
-  float angle = 0.0f;
 
   while (!win.ShouldClose()) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     shader.Use();
-
-    const glm::mat4x4 identity = glm::identity<glm::mat4x4>();
-    const glm::mat4x4 t = glm::rotate(identity, angle, { 0.0, 0.0, 1.0 }) * 
-      glm::scale(identity, { 0.25, 0.25, 0.25 });
-
-    shader.SetUniform("transform", t);
-
     buffer.Render();
-
-    angle += 0.0005f;
-    if (angle > 6.28f) angle = 0.0f;
 
     win.Swap();
     win.PollEvents();

@@ -127,8 +127,8 @@ int main() {
   RenderLib::Shader shader(Inputs::ShaderCodes::vShader, Inputs::ShaderCodes::fShader);
 
   RenderLib::Buffer buffer(Inputs::BufferData::vertex, Inputs::BufferData::index,
-    { {0/*position*/, 3/*nFloats*/},
-      {1/*UVs*/, 2/*nFLoats*/} }
+    { RenderLib::ShaderAttribute::Float(0/*position*/, 3/*nFloats*/),
+      RenderLib::ShaderAttribute::Float(1/*UVs*/, 2/*nFLoats*/) }
   );
 
   int width, height, nChannels;
@@ -146,8 +146,8 @@ int main() {
   
   
   RenderLib::Buffer quadBuffer(Inputs::BufferData::quad, Inputs::BufferData::quadIndex,
-    { {0/*pos*/, 3/*nFloats*/},
-      {1/*uv*/, 2/*nFloats*/} }
+    { RenderLib::ShaderAttribute::Float(0/*pos*/, 3/*nFloats*/),
+      RenderLib::ShaderAttribute::Float(1/*uv*/, 2/*nFloats*/) }
   );
 
   const RenderLib::TextureUnit texUnitPost = RenderLib::TextureUnit::UNIT_2;

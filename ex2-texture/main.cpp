@@ -72,8 +72,8 @@ int main() {
 
   RenderLib::Buffer buffer;
   buffer.Create(Inputs::BufferData::vertex, Inputs::BufferData::index,
-    { {0/*position*/, 3/*nFloats*/},
-      {1/*UVs*/, 2/*nFLoats*/} }
+    { RenderLib::ShaderAttribute::Float(0/*position*/, 3/*nFloats*/),
+      RenderLib::ShaderAttribute::Float(1/*UVs*/, 2/*nFLoats*/) }
   );
 
   int width, height, nChannels;

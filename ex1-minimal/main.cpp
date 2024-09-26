@@ -65,8 +65,8 @@ int main() {
   buffer.Create(
     Inputs::BufferData::vertex, Inputs::BufferData::vertexDataSize, 
     Inputs::BufferData::indexData, Inputs::BufferData::indexDataSize,
-    { {0/*position*/, 3/*nFloats*/},
-      {1/*color*/, 3/*nFLoats*/} }
+    { RenderLib::ShaderAttribute::Float(0/*position*/, 3/*nFloats*/),
+      RenderLib::ShaderAttribute::Float(1/*color*/, 3/*nFLoats*/) }
   );
 
   while (!win.ShouldClose()) {

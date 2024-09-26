@@ -1,9 +1,10 @@
+SET CMAKE=C:\Kleber\RLexamples\vcpkg\downloads\tools\cmake-3.27.1-windows\cmake-3.27.1-windows-i386\bin\cmake.exe
 SET VCPKG_TOOLCHAIN=vcpkg/scripts/buildsystems/vcpkg.cmake
 
 mkdir BUILD
 cd BUILD
 
-cmake .. -DCMAKE_TOOLCHAIN_FILE=../%VCPKG_TOOLCHAIN%
-cmake --build . 
+%CMAKE% .. -DCMAKE_TOOLCHAIN_FILE=../%VCPKG_TOOLCHAIN%
+%CMAKE% --build . 
 
 pause
